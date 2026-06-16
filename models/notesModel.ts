@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-/** 1. Define TypeScript Interface */
 export interface INote extends Document {
   title: string;
   content: string;
