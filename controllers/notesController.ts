@@ -61,6 +61,7 @@ const updateNote = async (req: Request, res: Response): Promise<void> => {
     });
   }
 };
+// getiting note by id
 const getNoteById = async (req: Request, res: Response): Promise<any> => {
   try {
     const note = await Note.findById(req.params.id);
@@ -70,13 +71,17 @@ const getNoteById = async (req: Request, res: Response): Promise<any> => {
     res.status(500).json({ message: error });
   }
 };
+// deleting notes
 const deleteNote = async (req: Request, res: Response): Promise<any> => {
   try {
     const note = await Note.findByIdAndDelete(req.params.id);
     if (!note) return res.status(404).json({ message: "Note not found" });
     res.status(200).json({ message: "Note deleted" });
-  } catch (error) {
-    res.status(500).json(message);
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : "Internal Server Error";
+
+    res.status(500).json({ message });
   }
 };
-export { getAllNotes, createNote, updateNote, getNoteById };
+export { getAllNotes, createNote, updateNote, getNoteById, deleteNote };
