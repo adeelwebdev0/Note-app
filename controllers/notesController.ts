@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import Note from "../models/notesModel.ts";
-import { string } from "zod";
+
 // getting all notes
 const getAllNotes = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -61,5 +61,22 @@ const updateNote = async (req: Request, res: Response): Promise<void> => {
     });
   }
 };
-
-export { getAllNotes, createNote, updateNote };
+const getNoteById = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const note = await Note.findById(req.params.id);
+    if (!note) return res.status(404).json({ message: "Note not found" });
+    res.status(200).json(note);
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+};
+const deleteNote = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const note = await Note.findByIdAndDelete(req.params.id);
+    if (!note) return res.status(404).json({ message: "Note not found" });
+    res.status(200).json({ message: "Note deleted" });
+  } catch (error) {
+    res.status(500).json(message);
+  }
+};
+export { getAllNotes, createNote, updateNote, getNoteById };
