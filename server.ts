@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/api", notesRoutes);
+app.use("/api/notes", notesRoutes);
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is runnig odn this port ${PORT} ✅✅`);
